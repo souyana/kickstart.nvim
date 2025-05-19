@@ -166,6 +166,12 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+-- Tab setting
+vim.o.expandtab = true
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -876,6 +882,20 @@ require('lazy').setup({
     },
   },
 
+  { 'ellisonleao/gruvbox.nvim', priority = 1000, config = true, opts = ... },
+  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
+  {
+    'rebelot/kanagawa.nvim',
+    name = 'kanagawa',
+    priority = 1000,
+    opts = {
+      background = {
+        dark = 'dragon',
+        light = 'lotus',
+      },
+    },
+  },
+
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
@@ -894,7 +914,15 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
+
+      vim.o.background = 'dark'
+      -- vim.cmd.colorscheme 'gruvbox'
+
+      -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+      -- vim.cmd.colorscheme 'catppuccin-frappe'
+
+      vim.cmd.colorscheme 'kanagawa'
     end,
   },
 
@@ -984,7 +1012,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
