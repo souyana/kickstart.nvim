@@ -3,22 +3,32 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+  -- Filer
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
     ---@type oil.SetupOpts
-    opts = {},
+    opts = {
+      default_file_explorer = true,
+      delete_to_trash = true,
+      view_options = {
+        show_hidden = true,
+      },
+      vim.keymap.set('n', '<leader>o', '<cmd>Oil<cr>', { desc = 'Open [O]il' }),
+    },
     -- Optional dependencies
     -- dependencies = { { "echasnovski/mini.icons", opts = {} } },
     dependencies = { 'nvim-tree/nvim-web-devicons' }, -- use if you prefer nvim-web-devicons
     -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
     lazy = false,
   },
+  -- Alternatives of typescript-language-server
   {
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {},
   },
+  -- Markdown preview for nvim
   {
     'toppair/peek.nvim',
     event = { 'VeryLazy' },
@@ -26,10 +36,49 @@ return {
     config = function()
       require('peek').setup {
         theme = 'light',
+        -- Open default browser
         app = 'browser',
       }
       vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
       vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+    end,
+  },
+  -- Call Lazygit from nvim
+  {
+    'kdheepak/lazygit.nvim',
+    lazy = false,
+    cmd = {
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+      'nvim-lua/plenary.nvim',
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+    },
+    config = function()
+      require('telescope').load_extension 'lazygit'
+    end,
+  },
+  -- Persist and toggle terminal in nvim
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    config = function()
+      require('toggleterm').setup {
+        open_mapping = [[<c-\>]],
+        hide_number = true, -- hide the number column in toggleterm buffers
+        start_in_insert = true,
+        direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+      }
     end,
   },
 }
