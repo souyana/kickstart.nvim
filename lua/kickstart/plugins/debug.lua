@@ -23,15 +23,18 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+
+    -- Python debugger
+    'mfussenegger/nvim-dap-python',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
     {
-      '<F5>',
+      '<leader>d',
       function()
         require('dap').continue()
       end,
-      desc = 'Debug: Start/Continue',
+      desc = '[D]ebug: Start/Continue',
     },
     {
       '<F1>',
@@ -95,6 +98,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'python',
       },
     }
 
@@ -144,5 +148,10 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    -- Call setup to register configurations
+    local python = vim.fn.expand '~/.local/share/nvim/mason/packages/debugpy/venv/bin/python'
+    require('dap-python').setup(python)
+    -- require('dap-python').setup('uv')
   end,
 }

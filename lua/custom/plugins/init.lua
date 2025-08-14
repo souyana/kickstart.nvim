@@ -81,4 +81,11 @@ return {
       }
     end,
   },
+  -- UV python package manager integration
+  {
+    'benomahony/uv.nvim',
+    opts = {
+      picker_integration = true,
+    },
+  },
 }
