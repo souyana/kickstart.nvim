@@ -429,6 +429,7 @@ require('lazy').setup({
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      pcall(require('telescope').load_extension, 'flutter')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -895,7 +896,7 @@ require('lazy').setup({
         dark = 'dragon',
         light = 'lotus',
       },
-      transparent = true,
+      transparent = false,
       styles = {
         sidebars = 'transparent',
         floats = 'transparent',

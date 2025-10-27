@@ -74,10 +74,11 @@ return {
     version = '*',
     config = function()
       require('toggleterm').setup {
+        size = vim.o.columns * 0.4,
         open_mapping = [[<c-\>]],
         hide_number = true, -- hide the number column in toggleterm buffers
         start_in_insert = true,
-        direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+        direction = 'vertical', -- 'vertical' | 'horizontal' | 'tab' | 'float'
       }
     end,
   },
@@ -87,5 +88,35 @@ return {
     opts = {
       picker_integration = true,
     },
+  },
+  -- Flutter development tools
+  {
+    'nvim-flutter/flutter-tools.nvim',
+    lazy = false,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'stevearc/dressing.nvim', -- optional for vim.ui.select
+    },
+    config = function()
+      require('flutter-tools').setup {
+        widget_guides = { enabled = true },
+        lsp = {
+          settings = {
+            showTodos = true,
+            completeFunctionCalls = true,
+            renameFilesWithClasses = 'prompt', -- or 'always'
+            updateImportsOnRename = true,
+          },
+        },
+        dev_log = {
+          enabled = false,
+        },
+        debugger = {
+          enabled = true,
+        },
+      }
+
+      vim.keymap.set('n', '<leader>0', require('telescope').extensions.flutter.commands, { desc = 'Flutter tools commands' })
+    end,
   },
 }
