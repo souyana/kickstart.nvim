@@ -123,4 +123,19 @@ return {
       vim.keymap.set('n', '<leader>0', require('telescope').extensions.flutter.commands, { desc = 'Flutter tools commands' })
     end,
   },
+  -- Animate the cursor with effect
+  {
+    'sphamba/smear-cursor.nvim',
+    opts = {
+      legacy_computing_symbols_support = true,
+      stiffness = 0.5,
+      trailing_stiffness = 0.5,
+      matrix_pixel_threshold = 0.5,
+    },
+  },
+  -- Smooth scrolling
+  {
+    'karb94/neoscroll.nvim',
+    opts = {},
+  },
 }
