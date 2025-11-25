@@ -14,6 +14,10 @@ return {
       view_options = {
         show_hidden = true,
       },
+      keymaps = {
+        ['<C-v>'] = { 'actions.select', opts = { vertical = true } },
+        ['<C-s>'] = { 'actions.select', opts = { horizontal = true } },
+      },
       vim.keymap.set('n', '<leader>o', '<cmd>Oil<cr>', { desc = 'Open [O]il' }),
     },
     -- Optional dependencies
