@@ -920,6 +920,16 @@ require('lazy').setup({
     name = 'kanagawa',
     priority = 1000,
     opts = {
+      colors = {
+        theme = {
+          all = {
+            ui = {
+              bg_gutter = 'none',
+            },
+          },
+        },
+      },
+      theme = 'dragon',
       background = {
         dark = 'dragon',
         light = 'lotus',
