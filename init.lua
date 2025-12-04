@@ -984,12 +984,12 @@ require('lazy').setup({
       -- vim.cmd.colorscheme 'tokyonight-night'
 
       vim.o.background = 'dark'
-      -- vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'gruvbox'
 
       -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
       -- vim.cmd.colorscheme 'catppuccin-frappe'
 
-      vim.cmd.colorscheme 'kanagawa'
+      -- vim.cmd.colorscheme 'kanagawa'
     end,
   },
 
