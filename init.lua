@@ -176,6 +176,11 @@ vim.o.autoindent = true
 vim.o.smartindent = true
 vim.o.smarttab = true
 
+-- Folding
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.wo.foldlevel = 99
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -913,85 +918,103 @@ require('lazy').setup({
   },
 
   -- Color scheme plugins
-  { 'ellisonleao/gruvbox.nvim', priority = 1000, config = true, opts = ... },
-  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
   {
-    'rebelot/kanagawa.nvim',
-    name = 'kanagawa',
+    'ellisonleao/gruvbox.nvim',
     priority = 1000,
-    opts = {
-      colors = {
-        theme = {
-          all = {
-            ui = {
-              bg_gutter = 'none',
-            },
-          },
-        },
-      },
-      theme = 'dragon',
-      background = {
-        dark = 'dragon',
-        light = 'lotus',
-      },
-      overrides = function(colors)
-        local theme = colors.theme
-        return {
-          -- Borderless Telescope
-          TelescopeTitle = { fg = theme.ui.special, bold = true },
-          TelescopePromptNormal = { bg = theme.ui.bg_p1 },
-          TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
-          TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
-          TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
-          TelescopePreviewNormal = { bg = theme.ui.bg_dim },
-          TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
-
-          -- Transparent Floating Windows
-          NormalFloat = { bg = 'none' },
-          FloatBorder = { bg = 'none' },
-          FloatTitle = { bg = 'none' },
-          -- Save an hlgroup with dark background and dimmed foreground
-          -- so that you can use it where your still want darker windows.
-          -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
-          NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-          -- Popular plugins that open floats will link to NormalFloat by default;
-          -- set their background accordingly if you wish to keep them dark and borderless
-          LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-          MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-        }
-      end,
-    },
-  },
-
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
+      require('gruvbox').setup {
+        contrast = 'soft',
+        transparent_mode = true,
       }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      -- vim.cmd.colorscheme 'tokyonight-night'
-
       vim.o.background = 'dark'
       vim.cmd.colorscheme 'gruvbox'
-
-      -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-      -- vim.cmd.colorscheme 'catppuccin-frappe'
-
-      -- vim.cmd.colorscheme 'kanagawa'
     end,
   },
+  -- {
+  --   'catppuccin/nvim',
+  --   name = 'catppuccin',
+  --   priority = 1000,
+  --   config = function ()
+  --     require('catppuccin').setup({})
+  --     -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+  --     vim.o.background = 'dark'
+  --     vim.cmd.colorscheme 'catppuccin-frappe'
+  --   end
+  -- },
+  -- {
+  --   'rebelot/kanagawa.nvim',
+  --   name = 'kanagawa',
+  --   priority = 1000,
+  --   opts = {
+  --     colors = {
+  --       theme = {
+  --         all = {
+  --           ui = {
+  --             bg_gutter = 'none',
+  --           },
+  --         },
+  --       },
+  --     },
+  --     theme = 'dragon',
+  --     background = {
+  --       dark = 'dragon',
+  --       light = 'lotus',
+  --     },
+  --     overrides = function(colors)
+  --       local theme = colors.theme
+  --       return {
+  --         -- Borderless Telescope
+  --         TelescopeTitle = { fg = theme.ui.special, bold = true },
+  --         TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+  --         TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+  --         TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+  --         TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+  --         TelescopePreviewNormal = { bg = theme.ui.bg_dim },
+  --         TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+  --
+  --         -- Transparent Floating Windows
+  --         NormalFloat = { bg = 'none' },
+  --         FloatBorder = { bg = 'none' },
+  --         FloatTitle = { bg = 'none' },
+  --         -- Save an hlgroup with dark background and dimmed foreground
+  --         -- so that you can use it where your still want darker windows.
+  --         -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
+  --         NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
+  --         -- Popular plugins that open floats will link to NormalFloat by default;
+  --         -- set their background accordingly if you wish to keep them dark and borderless
+  --         LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+  --         MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+  --       }
+  --     end,
+  --   },
+  --   config = function(_, opts)
+  --     require('kanagawa').setup(opts)
+  --     vim.o.background = 'dark'
+  --     vim.cmd.colorscheme 'kanagawa'
+  --   end,
+  -- },
+
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is.
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'folke/tokyonight.nvim',
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   config = function()
+  --     ---@diagnostic disable-next-line: missing-fields
+  --     require('tokyonight').setup {
+  --       styles = {
+  --         comments = { italic = false }, -- Disable italics in comments
+  --       },
+  --     }
+  --
+  --     -- Load the colorscheme here.
+  --     -- Like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'tokyonight-night'
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
@@ -1039,7 +1062,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'json' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {

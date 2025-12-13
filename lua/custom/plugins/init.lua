@@ -82,7 +82,7 @@ return {
         open_mapping = [[<c-\>]],
         hide_number = true, -- hide the number column in toggleterm buffers
         start_in_insert = true,
-        direction = 'vertical', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+        direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
       }
     end,
   },
