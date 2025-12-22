@@ -1052,6 +1052,11 @@ require('lazy').setup({
         return '%2l:%-2v'
       end
 
+      -- Simple start screen
+      --
+      -- Use Down/Up arrows (or <C-n>/<C-p>, or <M-j>/<M-k>) and hit Enter.
+      require('mini.starter').setup()
+
       -- ... and there is more!
       --  Check out: https://github.com/nvim-mini/mini.nvim
     end,
