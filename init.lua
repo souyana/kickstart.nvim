@@ -181,6 +181,9 @@ vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.wo.foldlevel = 99
 
+-- File encoding
+vim.o.fileencodings = 'ucs-bom,utf-8,cp932,euc-jp,latin1'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -707,9 +710,10 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         pyright = {},
+        bashls = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --

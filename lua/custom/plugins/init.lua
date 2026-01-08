@@ -33,19 +33,37 @@ return {
     opts = {},
   },
   -- Markdown preview for nvim
+  -- {
+  --   'toppair/peek.nvim',
+  --   event = { 'VeryLazy' },
+  --   build = 'deno task --quiet build:fast',
+  --   config = function()
+  --     require('peek').setup {
+  --       theme = 'light',
+  --       -- Open default browser
+  --       app = 'browser',
+  --     }
+  --     vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+  --     vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+  --   end,
+  -- },
   {
-    'toppair/peek.nvim',
-    event = { 'VeryLazy' },
-    build = 'deno task --quiet build:fast',
-    config = function()
-      require('peek').setup {
-        theme = 'light',
-        -- Open default browser
-        app = 'browser',
-      }
-      vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
-      vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    build = 'cd app && npm install', -- Use "npm install" or "yarn install"
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
     end,
+    ft = 'markdown', -- Lazy load the plugin for markdown filetypes
+    keys = {
+      { '<leader>mp', '<cmd>MarkdownPreview<cr>', desc = '[M]arkdown [P]review' },
+      { '<leader>ms', '<cmd>MarkdownPreviewStop<cr>', desc = '[M]arkdown preview [S]top' },
+    },
+    -- config = function()
+    --   -- Optional: set configuration options
+    --   vim.g.mkdp_auto_start = 1 -- Automatically start the preview when opening a markdown file
+    --   vim.g.mkdp_auto_close = 1 -- Automatically close the preview when leaving a markdown buffer
+    -- end,
   },
   -- Call Lazygit from nvim
   {
