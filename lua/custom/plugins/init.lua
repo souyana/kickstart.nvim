@@ -27,11 +27,11 @@ return {
     lazy = false,
   },
   -- Alternatives of typescript-language-server
-  {
-    'pmizio/typescript-tools.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {},
-  },
+  -- {
+  --   'pmizio/typescript-tools.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+  --   opts = {},
+  -- },
   -- Markdown preview for nvim
   -- {
   --   'toppair/peek.nvim',
@@ -100,7 +100,7 @@ return {
         open_mapping = [[<c-\>]],
         hide_number = true, -- hide the number column in toggleterm buffers
         start_in_insert = true,
-        direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+        direction = 'vertical', -- 'vertical' | 'horizontal' | 'tab' | 'float'
       }
     end,
   },
