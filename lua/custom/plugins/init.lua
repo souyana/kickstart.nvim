@@ -59,11 +59,21 @@ return {
       { '<leader>mp', '<cmd>MarkdownPreview<cr>', desc = '[M]arkdown [P]review' },
       { '<leader>ms', '<cmd>MarkdownPreviewStop<cr>', desc = '[M]arkdown preview [S]top' },
     },
-    -- config = function()
-    --   -- Optional: set configuration options
-    --   vim.g.mkdp_auto_start = 1 -- Automatically start the preview when opening a markdown file
-    --   vim.g.mkdp_auto_close = 1 -- Automatically close the preview when leaving a markdown buffer
-    -- end,
+    config = function()
+      -- Optional: set configuration options
+      -- vim.g.mkdp_auto_start = 1 -- Automatically start the preview when opening a markdown file
+      -- vim.g.mkdp_auto_close = 1 -- Automatically close the preview when leaving a markdown buffer
+      vim.cmd [[
+        function! OpenMarkdownPreview(url)
+          if has('mac')
+            execute "silent !open -n -a 'Brave Browser' --args --new-window " . a:url
+          elseif has('win32') || has('win64')
+            execute "silent !start " . a:url
+          endif
+        endfunction
+      ]]
+      vim.g.mkdp_browserfunc = 'OpenMarkdownPreview'
+    end,
   },
   -- Call Lazygit from nvim
   {
