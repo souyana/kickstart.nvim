@@ -184,6 +184,10 @@ vim.wo.foldlevel = 99
 -- File encoding
 vim.o.fileencodings = 'ucs-bom,utf-8,cp932,euc-jp,latin1'
 
+-- Fix end of file
+vim.opt.fixendofline = false
+vim.opt.endofline = false
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
