@@ -47,11 +47,9 @@ require('mason-nvim-dap').setup {
 -- Dap UI setup
 -- For more information, see |:help nvim-dap-ui|
 dapui.setup {
-  expand_lines = true,
-  floating = { border = 'rounded' },
-  icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
   controls = {
-    enabled = false,
+    element = 'repl',
+    enabled = true,
     icons = {
       pause = '⏸',
       play = '▶',
@@ -64,27 +62,74 @@ dapui.setup {
       disconnect = '⏏',
     },
   },
-  render = {
-    max_type_length = 60,
-    max_value_lines = 200,
+  element_mappings = {},
+  expand_lines = true,
+  floating = {
+    border = 'single',
+    mappings = {
+      close = { 'q', '<Esc>' },
+    },
+  },
+  force_buffers = true,
+  wrap = false,
+  icons = {
+    collapsed = '▸',
+    current_frame = '*',
+    expanded = '▾',
   },
   layouts = {
     {
       elements = {
-        { id = 'scopes', size = 0.5 },
-        'repl',
+        {
+          id = 'scopes',
+          size = 0.25,
+        },
+        {
+          id = 'breakpoints',
+          size = 0.25,
+        },
+        {
+          id = 'stacks',
+          size = 0.25,
+        },
+        {
+          id = 'watches',
+          size = 0.25,
+        },
       },
-      size = 15,
-      position = 'bottom',
+      position = 'left',
+      size = 40,
     },
+    {
+      elements = { {
+        id = 'repl',
+        size = 0.5,
+      }, {
+        id = 'console',
+        size = 0.5,
+      } },
+      position = 'bottom',
+      size = 10,
+    },
+  },
+  mappings = {
+    edit = 'e',
+    expand = { '<CR>', '<2-LeftMouse>' },
+    open = 'o',
+    remove = 'd',
+    repl = 'r',
+    toggle = 't',
+  },
+  render = {
+    indent = 1,
+    max_value_lines = 100,
   },
 }
 
 -- Change breakpoint icons
 vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
 vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
-local breakpoint_icons = vim.g.have_nerd_font
-    and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+local breakpoint_icons = vim.g.have_nerd_font and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
   or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
 for type, icon in pairs(breakpoint_icons) do
   local tp = 'Dap' .. type
